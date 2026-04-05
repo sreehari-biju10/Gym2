@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Royal Fitness Club Gym – Puthupally</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:ital,wght@0,300;0,400;0,600;0,700;1,300&display=swap" rel="stylesheet"/>
+  <style>
+    /* =============================================
+       CSS VARIABLES — edit colours here if needed
+       ============================================= */
+    :root {
+      --bg:       #09090b;
+      --surface:  #101014;
+      --card:     #17171d;
+      --border:   #28283a;
+      --gold:     #c8a44a;
+      --gold-dim: #8a6b28;
+      --white:    #ede9df;
+      --muted:    #727283;
+      --red:      #e03040;
+    }
+
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--white);
+      font-family: 'Barlow', sans-serif;
+      font-weight: 300;
+      overflow-x: hidden;
+    }
+
+    /* grain overlay */
+    body::after {
+      content:'';
+      position:fixed; inset:0;
+      background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+      pointer-events:none; z-index:9999; opacity:.5;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position:fixed; top:0; left:0; right:0; z-index:998;
+      display:flex; justify-content:space-between; align-items:center;
+      padding:16px 6vw;
+      background:rgba(9,9,11,.88);
+      backdrop-filter:blur(14px);
+      border-bottom:1px solid var(--border);
+    }
+    .nav-logo {
+      font-family:'Bebas Neue',cursive;
+      font-size:1.45rem; letter-spacing:4px; color:var(--gold);
+    }
+    .nav-links { display:flex; gap:2rem; list-style:none; }
+    .nav-links a {
+      color:var(--muted); text-decoration:none;
+      font-size:.72rem; letter-spacing:2.5px; text-transform:uppercase; font-weight:600;
+      transition:color .25s;
+    }
+    .nav-links a:hover { color:var(--gold); }
+
+    /* ── HERO ── */
+    .hero {
+      min-height:100vh;
+      display:flex; flex-direction:column;
+      justify-content:center; align-items:center; text-align:center;
+      padding:130px 6vw 90px;
+      position:relative; overflow:hidden;
+    }
+    .hero-bg {
+      position:absolute; inset:0;
+      background:
+        radial-gradient(ellipse 75% 55% at 50% 45%, rgba(200,164,74,.09) 0%, transparent 70%),
+        radial-gradient(ellipse 35% 35% at 75% 75%, rgba(224,48,64,.06) 0%, transparent 60%),
+        linear-gradient(170deg,#09090b 0%,#0d0d11 100%);
+    }
+    /* decorative rings */
+    .ring {
+      position:absolute; border-radius:50%;
+      border:1px solid rgba(200,164,74,.1);
+      top:50%; left:50%;
+      animation:pulse 7s ease-in-out infinite;
+    }
+    .ring:nth-child(1){ width:480px; height:480px; transform:translate(-50%,-50%); }
+    .ring:nth-child(2){ width:720px; height:720px; transform:translate(-50%,-50%); animation-delay:2s; }
+    .ring:nth-child(3){ width:960px; height:960px; transform:translate(-50%,-50%); animation-delay:4s; }
+    @keyframes pulse {
+      0%,100%{ opacity:.6; transform:translate(-50%,-50%) scale(1); }
+      50%    { opacity:.15; transform:translate(-50%,-50%) scale(1.04); }
+    }
+
+    .hero-crown {
+      position:relative;
+      font-size:2.8rem; margin-bottom:.9rem;
+      animation:float 4s ease-in-out infinite;
+      filter:drop-shadow(0 0 22px rgba(200,164,74,.55));
+    }
+    @keyframes float {
+      0%,100%{ transform:translateY(0); }
+      50%    { transform:translateY(-10px); }
+    }
+    .hero-eyebrow {
+      position:relative;
+      font-size:.7rem; letter-spacing:6px; text-transform:uppercase;
+      color:var(--gold); margin-bottom:1rem; font-weight:600;
+    }
+    .hero-title {
+      position:relative;
+      font-family:'Bebas Neue',cursive;
+      font-size:clamp(4.5rem,13vw,11rem);
+      line-height:.9; letter-spacing:5px;
+      background:linear-gradient(140deg,var(--gold) 0%,#f0d47a 45%,var(--gold-dim) 100%);
+      -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+      animation:fadeUp 1s cubic-bezier(.22,1,.36,1) both;
+    }
+    .hero-city {
+      position:relative;
+      font-family:'Bebas Neue',cursive;
+      font-size:clamp(1.6rem,4vw,3.2rem);
+      letter-spacing:9px; color:var(--white); opacity:.82;
+      margin-bottom:1.8rem;
+      animation:fadeUp 1s .18s cubic-bezier(.22,1,.36,1) both;
+    }
+    .hero-slogan {
+      position:relative;
+      font-size:clamp(.88rem,1.8vw,1.05rem);
+      font-style:italic; color:var(--muted); letter-spacing:2px;
+      margin-bottom:3rem;
+      animation:fadeUp 1s .35s cubic-bezier(.22,1,.36,1) both;
+    }
+    .hero-slogan em { font-style:normal; color:var(--gold); }
+    @keyframes fadeUp {
+      from{ opacity:0; transform:translateY(36px); }
+      to  { opacity:1; transform:translateY(0); }
+    }
+    .btn-outline {
+      position:relative; overflow:hidden;
+      display:inline-block; padding:13px 40px;
+      border:1px solid var(--gold); color:var(--gold);
+      font-family:'Barlow',sans-serif; font-size:.75rem;
+      font-weight:700; letter-spacing:4px; text-transform:uppercase;
+      text-decoration:none; transition:color .32s;
+      animation:fadeUp 1s .5s cubic-bezier(.22,1,.36,1) both;
+    }
+    .btn-outline::before {
+      content:''; position:absolute; inset:0;
+      background:var(--gold); transform:scaleX(0);
+      transform-origin:left; transition:transform .35s cubic-bezier(.22,1,.36,1);
+      z-index:0;
+    }
+    .btn-outline:hover{ color:#09090b; }
+    .btn-outline:hover::before{ transform:scaleX(1); }
+    .btn-outline span{ position:relative; z-index:1; }
+
+    .scroll-cue {
+      position:absolute; bottom:28px; left:50%; transform:translateX(-50%);
+      display:flex; flex-direction:column; align-items:center; gap:7px;
+      color:var(--muted); font-size:.6rem; letter-spacing:3px; text-transform:uppercase;
+    }
+    .scroll-line {
+      width:1px; height:48px;
+      background:linear-gradient(to bottom,var(--gold),transparent);
+      animation:drip 2.2s ease-in-out infinite;
+    }
+    @keyframes drip {
+      0%  { transform:scaleY(0); transform-origin:top; }
+      50% { transform:scaleY(1); transform-origin:top; }
+      51% { transform:scaleY(1); transform-origin:bottom; }
+      100%{ transform:scaleY(0); transform-origin:bottom; }
+    }
+
+    /* ── SECTION COMMONS ── */
+    section { padding:100px 6vw; }
+    .label {
+      font-size:.68rem; letter-spacing:6px; text-transform:uppercase;
+      color:var(--gold); font-weight:600; margin-bottom:.7rem;
+    }
+    .sec-title {
+      font-family:'Bebas Neue',cursive;
+      font-size:clamp(2.6rem,6vw,5rem);
+      line-height:1; letter-spacing:2px; margin-bottom:1.8rem;
+    }
+    .gold-rule {
+      width:56px; height:2px;
+      background:linear-gradient(to right,var(--gold),transparent);
+      margin-bottom:2.4rem;
+    }
+    .divider {
+      height:1px;
+      background:linear-gradient(to right,transparent,var(--border),transparent);
+    }
+
+    /* ── ABOUT ── */
+    #about { background:var(--surface); }
+    .about-wrap {
+      max-width:1100px; margin:0 auto;
+      display:grid; grid-template-columns:360px 1fr; gap:5vw; align-items:start;
+    }
+
+    /* --- TRAINER PHOTO — EDITABLE --- */
+    .trainer-photo-box {
+      position:relative;
+      border:1px solid var(--border);
+      overflow:hidden;
+      background:var(--card);
+    }
+    /*
+    ╔══════════════════════════════════════════════════════╗
+    ║  HOW TO ADD YOUR TRAINER PHOTO:                      ║
+    ║  Option A — Replace the src below with your image:  ║
+    ║    <img src="YOUR_PHOTO.jpg" …>                      ║
+    ║  Option B — Use a URL:                               ║
+    ║    src="https://yoursite.com/photo.jpg"              ║
+    ║  The image is already styled — just swap the src.    ║
+    ╚══════════════════════════════════════════════════════╝
+    */
+    .trainer-photo-box img {
+      width:100%; aspect-ratio:3/4; object-fit:cover; display:block;
+    }
+    /* Remove the placeholder div once you add a real image */
+    .photo-placeholder {
+      width:100%; aspect-ratio:3/4;
+      display:flex; flex-direction:column;
+      align-items:center; justify-content:center; gap:14px;
+      background:linear-gradient(145deg,#16151c,#0e0e12);
+    }
+    .photo-placeholder .ph-icon { font-size:3.5rem; opacity:.2; }
+    .photo-placeholder .ph-text {
+      font-size:.65rem; letter-spacing:3px; text-transform:uppercase;
+      color:var(--muted); opacity:.45; text-align:center; line-height:1.8;
+    }
+    /* gold corner accents */
+    .trainer-photo-box::before,
+    .trainer-photo-box::after {
+      content:''; position:absolute;
+      width:36px; height:36px;
+      border-color:var(--gold); border-style:solid; opacity:.5; z-index:2;
+    }
+    .trainer-photo-box::before { top:-6px; left:-6px; border-width:2px 0 0 2px; }
+    .trainer-photo-box::after  { bottom:-6px; right:-6px; border-width:0 2px 2px 0; }
+
+    .exp-badge {
+      position:absolute; bottom:-14px; right:-14px;
+      width:92px; height:92px; border-radius:50%;
+      background:var(--gold); color:#09090b;
+      display:flex; flex-direction:column;
+      align-items:center; justify-content:center;
+      font-family:'Bebas Neue',cursive; font-size:1rem;
+      line-height:1.1; text-align:center; letter-spacing:1px;
+      box-shadow:0 0 28px rgba(200,164,74,.4); z-index:3;
+    }
+    .exp-badge small {
+      font-family:'Barlow',sans-serif; font-size:.5rem;
+      font-weight:700; letter-spacing:2px;
+    }
+
+    /* trainer text */
+    .trainer-name {
+      font-family:'Bebas Neue',cursive;
+      font-size:clamp(1.8rem,3.5vw,2.8rem);
+      color:var(--gold); letter-spacing:3px; margin-bottom:1.4rem;
+    }
+    .trainer-bio {
+      font-size:.95rem; line-height:1.95; color:#aeaaa2; margin-bottom:2rem;
+    }
+    .stats-row {
+      display:grid; grid-template-columns:repeat(3,1fr);
+      gap:1px; background:var(--border);
+      border:1px solid var(--border); margin-bottom:2rem;
+    }
+    .stat { background:var(--card); padding:1.1rem .8rem; text-align:center; }
+    .stat-n {
+      font-family:'Bebas Neue',cursive; font-size:2rem;
+      color:var(--gold); line-height:1;
+    }
+    .stat-l {
+      font-size:.6rem; letter-spacing:2px; text-transform:uppercase;
+      color:var(--muted); margin-top:4px;
+    }
+    .tags { display:flex; flex-wrap:wrap; gap:.5rem; }
+    .tag {
+      padding:5px 13px; border:1px solid var(--border);
+      font-size:.68rem; letter-spacing:2px; text-transform:uppercase;
+      color:var(--muted); transition:all .25s;
+    }
+    .tag:hover { border-color:var(--gold); color:var(--gold); }
+
+    /* ── GALLERY ── */
+    #gallery { background:var(--bg); }
+    .gallery-head { max-width:1100px; margin:0 auto 2.5rem; }
+    .gallery-grid {
+      max-width:1100px; margin:0 auto;
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      grid-auto-rows:220px;
+      gap:10px;
+    }
+    .g-item {
+      position:relative; overflow:hidden;
+      background:var(--card); border:1px solid var(--border);
+      cursor:pointer;
+    }
+    .g-item.span-v { grid-row:span 2; }
+    .g-item.span-h { grid-column:span 2; }
+
+    /*
+    ╔══════════════════════════════════════════════════════════╗
+    ║  HOW TO ADD GALLERY IMAGES:                              ║
+    ║  Each .g-item has a <img> tag with class "g-img".        ║
+    ║  Replace src="YOUR_IMAGE_X.jpg" with your actual path.   ║
+    ║  The image fills the cell — aspect ratio is automatic.   ║
+    ║  Delete the <div class="g-ph"> block once you add a pic. ║
+    ╚══════════════════════════════════════════════════════════╝
+    */
+    .g-img {
+      position:absolute; inset:0;
+      width:100%; height:100%;
+      object-fit:cover;
+      transition:transform .45s cubic-bezier(.22,1,.36,1);
+    }
+    .g-item:hover .g-img { transform:scale(1.06); }
+
+    /* placeholder shown when no image is added yet */
+    .g-ph {
+      position:absolute; inset:0;
+      display:flex; flex-direction:column;
+      align-items:center; justify-content:center; gap:10px;
+    }
+    .g-ph-icon { font-size:2.2rem; opacity:.15; }
+    .g-ph-cap {
+      font-size:.58rem; letter-spacing:3px;
+      text-transform:uppercase; color:var(--muted); opacity:.4;
+    }
+    /* unique tints per cell */
+    .g-item:nth-child(1) .g-ph { background:linear-gradient(140deg,#1b160f,#0f0f0a); }
+    .g-item:nth-child(2) .g-ph { background:linear-gradient(140deg,#0f121b,#0a0c12); }
+    .g-item:nth-child(3) .g-ph { background:linear-gradient(140deg,#151118,#0e0a11); }
+    .g-item:nth-child(4) .g-ph { background:linear-gradient(140deg,#0b1510,#090f0b); }
+    .g-item:nth-child(5) .g-ph { background:linear-gradient(140deg,#1b1010,#130b0b); }
+    .g-item:nth-child(6) .g-ph { background:linear-gradient(140deg,#15150b,#0f0f08); }
+    .g-item:nth-child(7) .g-ph { background:linear-gradient(140deg,#0b0b1b,#08080f); }
+
+    .g-overlay {
+      position:absolute; inset:0;
+      background:rgba(200,164,74,.07);
+      border:1px solid rgba(200,164,74,.28);
+      opacity:0; transition:opacity .3s;
+      display:flex; align-items:center; justify-content:center;
+    }
+    .g-overlay span {
+      font-size:.6rem; letter-spacing:3px;
+      text-transform:uppercase; color:var(--gold);
+    }
+    .g-item:hover .g-overlay { opacity:1; }
+
+    /* gallery caption badge */
+    .g-label {
+      position:absolute; bottom:0; left:0; right:0;
+      padding:8px 14px;
+      background:linear-gradient(to top,rgba(9,9,11,.85),transparent);
+      font-size:.62rem; letter-spacing:2px; text-transform:uppercase;
+      color:var(--muted);
+    }
+
+    /* ── CONTACT ── */
+    #contact { background:var(--surface); }
+    .contact-wrap {
+      max-width:1100px; margin:0 auto;
+      display:grid; grid-template-columns:1fr 1fr; gap:5vw;
+    }
+    .contact-list { display:flex; flex-direction:column; gap:1.2rem; }
+    .c-item {
+      display:flex; align-items:flex-start; gap:1.1rem;
+      padding:1.3rem 1.2rem;
+      background:var(--card); border:1px solid var(--border);
+      transition:border-color .3s;
+    }
+    .c-item:hover { border-color:var(--gold-dim); }
+    .c-icon { font-size:1.3rem; min-width:34px; padding-top:2px; opacity:.7; }
+    .c-detail h4 {
+      font-size:.62rem; letter-spacing:3px; text-transform:uppercase;
+      color:var(--gold); margin-bottom:.35rem; font-weight:600;
+    }
+    .c-detail p { font-size:.92rem; color:#aeaaa2; line-height:1.75; }
+
+    /*
+    ╔═════════════════════════════════════════════════════════════╗
+    ║  HOW TO EDIT CONTACT DETAILS:                               ║
+    ║  Search for <!-- EDIT: … --> comments below and replace     ║
+    ║  the text inside <p> tags with your real information.       ║
+    ╚═════════════════════════════════════════════════════════════╝
+    */
+
+    .social-wrap { margin-top:1.6rem; }
+    .social-label {
+      font-size:.62rem; letter-spacing:4px; text-transform:uppercase;
+      color:var(--gold); font-weight:600; margin-bottom:.9rem;
+    }
+    .social-row { display:flex; gap:.7rem; }
+    .s-btn {
+      width:42px; height:42px; border:1px solid var(--border);
+      display:flex; align-items:center; justify-content:center;
+      font-size:1rem; text-decoration:none; color:var(--muted);
+      transition:all .25s;
+    }
+    .s-btn:hover { border-color:var(--gold); color:var(--gold); }
+
+    /* contact form side */
+    .form-side { display:flex; flex-direction:column; gap:.9rem; }
+    .form-title {
+      font-family:'Bebas Neue',cursive; font-size:2rem;
+      letter-spacing:2px; margin-bottom:.3rem;
+    }
+    .form-desc { font-size:.84rem; color:var(--muted); margin-bottom:.4rem; }
+    .f-group { display:flex; flex-direction:column; gap:.35rem; }
+    .f-group label {
+      font-size:.62rem; letter-spacing:3px; text-transform:uppercase;
+      color:var(--muted); font-weight:600;
+    }
+    .f-group input,
+    .f-group textarea {
+      background:var(--card); border:1px solid var(--border);
+      color:var(--white); padding:11px 15px;
+      font-family:'Barlow',sans-serif; font-size:.9rem;
+      outline:none; transition:border-color .3s;
+    }
+    .f-group input:focus,
+    .f-group textarea:focus { border-color:var(--gold); }
+    .f-group textarea { resize:vertical; min-height:100px; }
+    .btn-submit {
+      padding:13px; background:transparent;
+      border:1px solid var(--gold); color:var(--gold);
+      font-family:'Barlow',sans-serif; font-size:.75rem;
+      font-weight:700; letter-spacing:4px; text-transform:uppercase;
+      cursor:pointer; position:relative; overflow:hidden; transition:color .32s;
+    }
+    .btn-submit::before {
+      content:''; position:absolute; inset:0;
+      background:var(--gold); transform:scaleX(0);
+      transform-origin:left; transition:transform .35s cubic-bezier(.22,1,.36,1); z-index:0;
+    }
+    .btn-submit:hover{ color:#09090b; }
+    .btn-submit:hover::before{ transform:scaleX(1); }
+    .btn-submit span{ position:relative; z-index:1; }
+
+    /* ── FOOTER ── */
+    footer {
+      background:var(--bg);
+      border-top:1px solid var(--border);
+      padding:36px 6vw;
+      display:flex; justify-content:space-between; align-items:center;
+      flex-wrap:wrap; gap:1rem;
+    }
+    .f-logo { font-family:'Bebas Neue',cursive; font-size:1.25rem; letter-spacing:4px; color:var(--gold); }
+    .f-note { font-size:.66rem; letter-spacing:2px; color:var(--muted); text-transform:uppercase; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width:820px) {
+      .nav-links { display:none; }
+      section { padding:70px 5vw; }
+      .about-wrap { grid-template-columns:1fr; }
+      .trainer-photo-box { max-width:300px; margin:0 auto 3rem; }
+      .gallery-grid { grid-template-columns:repeat(2,1fr); }
+      .g-item.span-h { grid-column:span 1; }
+      .contact-wrap { grid-template-columns:1fr; }
+      footer { flex-direction:column; text-align:center; }
+    }
+    @media (max-width:500px) {
+      .gallery-grid { grid-template-columns:1fr; }
+      .g-item.span-v { grid-row:span 1; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════
+     NAV
+═══════════════════════════════════════════ -->
+<nav>
+  <div class="nav-logo">RFC</div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#gallery">Gallery</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+
+<!-- ═══════════════════════════════════════════
+     HERO
+═══════════════════════════════════════════ -->
+<section class="hero" id="home">
+  <div class="hero-bg"></div>
+  <div class="ring"></div>
+  <div class="ring"></div>
+  <div class="ring"></div>
+
+  <div class="hero-crown">👑</div>
+  <p class="hero-eyebrow">Est. 2018 &nbsp;·&nbsp; Puthupally, Kerala</p>
+  <h1 class="hero-title">Royal<br>Fitness<br>Club</h1>
+  <p class="hero-city">Puthupally</p>
+  <p class="hero-slogan">"Train like a <em>King</em>. Reign over your limits."</p>
+  <a href="#about" class="btn-outline"><span>Discover the Club</span></a>
+
+  <div class="scroll-cue">
+    <div class="scroll-line"></div>
+    <span>Scroll</span>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+
+<!-- ═══════════════════════════════════════════
+     ABOUT
+═══════════════════════════════════════════ -->
+<section id="about">
+  <div class="about-wrap">
+
+    <!-- ─── TRAINER PHOTO ──────────────────────────
+         TO ADD YOUR PHOTO:
+         1. Delete the entire <div class="photo-placeholder">…</div> block below
+         2. Uncomment the <img> line and replace YOUR_PHOTO.jpg with your file path
+         e.g.: <img src="trainer.jpg" alt="Coach Abesh" class="...">
+    ──────────────────────────────────────────── -->
+    <div class="trainer-photo-box">
+
+      <!-- ↓↓ DELETE this placeholder block once you add your photo ↓↓ -->
+      <div class="photo-placeholder">
+        <div class="ph-icon">🏋️</div>
+        <div class="ph-text">Replace with<br>trainer photo<br>(see HTML comment)</div>
+      </div>
+      <!-- ↑↑ DELETE this placeholder block once you add your photo ↑↑ -->
+
+      <!-- ↓↓ UNCOMMENT & edit the line below to add your trainer photo ↓↓ -->
+      <!-- <img src="YOUR_PHOTO.jpg" alt="Coach Abesh" class="g-img" style="position:relative;aspect-ratio:3/4;height:auto;"> -->
+
+      <div class="exp-badge">
+        <small>Head</small>
+        Trainer
+      </div>
+    </div>
+    <!-- ─── end trainer photo ─── -->
+
+    <div class="trainer-text">
+      <p class="label">Meet Your Coach</p>
+      <h2 class="sec-title">About<br>the Trainer</h2>
+      <div class="gold-rule"></div>
+      <p class="trainer-name">Coach Abesh</p>
+      <p class="trainer-bio">
+        With over a decade of hands-on experience in strength training, functional fitness, and body transformation, Coach Abesh is the driving force behind Royal Fitness Club Gym. A certified personal trainer and nutrition consultant, Abesh has helped hundreds of clients across Puthupally and beyond redefine their physical limits and build the discipline to sustain a healthy lifestyle.
+        <br><br>
+        His philosophy is simple: real results come from consistent effort, smart programming, and the right mindset. Whether you are a complete beginner or a seasoned athlete, Abesh crafts personalised training plans tailored to your body type, goals, and schedule — always pushing you to become a better version of yourself.
+      </p>
+
+      <div class="tags">
+        <span class="tag">Strength Training</span>
+        <span class="tag">Cardio &amp; HIIT</span>
+        <span class="tag">Weight Loss</span>
+        <span class="tag">Muscle Building</span>
+        <span class="tag">Nutrition Coaching</span>
+        <span class="tag">Flexibility</span>
+        <span class="tag">Posture Correction</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<div class="divider"></div>
+
+
+<!-- ═══════════════════════════════════════════
+     GALLERY
+     ─────────────────────────────────────────
+     HOW TO ADD YOUR IMAGES:
+     • Each photo cell contains one <img class="g-img"> tag.
+     • Replace src="YOUR_IMAGE_X.jpg" with your file name or URL.
+     • The <div class="g-ph"> placeholder disappears once the
+       <img> loads, OR you can delete the g-ph div manually.
+     • Captions: edit the text inside <div class="g-label">.
+     • Cell layout:  span-v = tall cell (spans 2 rows)
+                     span-h = wide cell (spans 2 columns)
+═══════════════════════════════════════════ -->
+<section id="gallery">
+  <div class="gallery-head">
+    <p class="label">Inside the Club</p>
+    <h2 class="sec-title">Photo Gallery</h2>
+    <div class="gold-rule"></div>
+  </div>
+
+  <div class="gallery-grid">
+
+    <!-- CELL 1 — tall (spans 2 rows) -->
+    <div class="g-item span-v">
+      <img class="g-img" src="YOUR_IMAGE_1.jpg" alt="Weight Floor"
+           onerror="this.style.display='none'"/><!-- DELETE this img tag's onerror once you have a real image -->
+      <div class="g-ph"><div class="g-ph-icon">🏋️</div><div class="g-ph-cap">Image 1<br>Weight Floor</div></div>
+      <div class="g-overlay"><span>View</span></div>
+      <div class="g-label">Weight Floor</div>
+    </div>
+
+    <!-- CELL 2 -->
+    <div class="g-item">
+      <img class="g-img" src="YOUR_IMAGE_2.jpg" alt="Cardio Zone"
+           onerror="this.style.display='none'"/>
+      <div class="g-ph"><div class="g-ph-icon">🚴</div><div class="g-ph-cap">Image 2<br>Cardio Zone</div></div>
+      <div class="g-overlay"><span>View</span></div>
+      <div class="g-label">Cardio Zone</div>
+    </div>
+
+    <!-- CELL 3 -->
+    <div class="g-item">
+      <img class="g-img" src="YOUR_IMAGE_3.jpg" alt="Training Area"
+           onerror="this.style.display='none'"/>
+      <div class="g-ph"><div class="g-ph-icon">💪</div><div class="g-ph-cap">Image 3<br>Training Area</div></div>
+      <div class="g-overlay"><span>View</span></div>
+      <div class="g-label">Training Area</div>
+    </div>
+
+
+  </div>
+</section>
+
+<div class="divider"></div>
+
+
+<!-- ═══════════════════════════════════════════
+     CONTACT
+     ─────────────────────────────────────────
+     HOW TO EDIT CONTACT INFO:
+     Find each <!-- EDIT: … --> comment and
+     replace the text in the <p> tag below it.
+═══════════════════════════════════════════ -->
+<section id="contact">
+  <div class="contact-wrap">
+
+    <!-- Left column: contact details -->
+    <div>
+      <p class="label">Get in Touch</p>
+      <h2 class="sec-title">Contact<br>Info</h2>
+      <div class="gold-rule"></div>
+
+      <div class="contact-list">
+
+        <div class="c-item">
+          <div class="c-icon">📞</div>
+          <div class="c-detail">
+            <h4>Phone</h4>
+            <!-- EDIT: replace with your phone numbers -->
+            <p>+91 XXXXX XXXXX<br>+91 XXXXX XXXXX</p>
+          </div>
+        </div>
+
+        <div class="c-item">
+          <div class="c-icon">✉️</div>
+          <div class="c-detail">
+            <h4>Email</h4>
+            <!-- EDIT: replace with your email address -->
+            <p>yourmail@gmail.com</p>
+          </div>
+        </div>
+
+        <div class="c-item">
+          <div class="c-icon">🕐</div>
+          <div class="c-detail">
+            <h4>Timings</h4>
+            <!-- EDIT: replace with your opening hours -->
+            <p>Monday – Saturday<br>5:00 AM – 10:00 PM<br>Sunday: 6:00 AM – 8:00 PM</p>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="social-wrap">
+        <p class="social-label">Follow Us</p>
+        <div class="social-row">
+          <!-- EDIT: replace # with your actual social media URLs -->
+          <a href="#" class="s-btn" title="Instagram">📸</a>
+          <a href="#" class="s-btn" title="Facebook">👤</a>
+          <a href="#" class="s-btn" title="YouTube">▶️</a>
+          <a href="#" class="s-btn" title="WhatsApp">💬</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right column: message form -->
+    <div class="form-side">
+      <p class="form-title">Send a Message</p>
+      <p class="form-desc">Have questions about memberships, training plans, or schedules? Drop us a note.</p>
+      <div class="f-group">
+        <label>Your Name</label>
+        <input type="text" placeholder="e.g. Raju Thomas" />
+      </div>
+      <div class="f-group">
+        <label>Phone / Email</label>
+        <input type="text" placeholder="+91 98xxxxxxx  or  you@email.com" />
+      </div>
+      <div class="f-group">
+        <label>Message</label>
+        <textarea placeholder="Tell us your fitness goals or ask about our plans…"></textarea>
+      </div>
+      <button class="btn-submit"><span>Send Message</span></button>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- FOOTER -->
+<footer>
+  <div class="f-logo">Royal Fitness Club</div>
+  <!-- EDIT: update year if needed -->
+  <p class="f-note">© 2025 Royal Fitness Club Gym, Puthupally &nbsp;·&nbsp; All Rights Reserved</p>
+</footer>
+
+</body>
+</html>
